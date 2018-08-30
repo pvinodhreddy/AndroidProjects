@@ -7,6 +7,8 @@
     <string name="txt_appTitle">DriveMe</string>
     <string name="txt_SrcLocation">Source</string>
     <string name="txt_DestLocation">Destination</string>
+    <string name="txt_Next">Next</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
