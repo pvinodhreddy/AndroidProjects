@@ -1,12 +1,18 @@
 package com.dogs.pet.mylocation;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.Random;
+
+import static com.dogs.pet.mylocation.HomeActivity.generateRandom;
 
 
 /**
@@ -26,7 +32,9 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private Button btn_SignUp;
+    private EditText Email;
+    private EditText password;
     private OnFragmentInteractionListener mListener;
 
     public SignupFragment() {
@@ -63,8 +71,16 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View fragment = inflater.inflate(R.layout.fragment_signup, container, false);
+
+       btn_SignUp = (Button) fragment.findViewById(R.id.btn_signup);
+       Email = (EditText) fragment.findViewById(R.id.txt_Email);
+       password = (EditText) fragment.findViewById(R.id.txt_Pwd);
+
+        btn_SignUp.setOnClickListener(this);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_signup, container, false);
+        return fragment;
     }
 
 
@@ -86,10 +102,40 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
         mListener = null;
     }
 
+
+
+
+
     @Override
     public void onClick(View v) {
+
+        MyDBHandler dbHandler = new MyDBHandler(getActivity());
+        HomeActivity homeactivity = new HomeActivity();
+
+
+        String RanID = generateRandom();
+        String email = Email.getText().toString();
+        String pwd = password.getText().toString();
+        String datetime = homeactivity.getDateTime();
+
+       // boolean delete = dbHandler.Deleteuser("Vinodh@gmail.com");
+
+         boolean Response = dbHandler.insertuser( RanID, email, pwd, null, null, null, null, datetime );
+
+
         if (mListener != null) {
             mListener.onButtonClick(v);
+
         }
+
+
+
+        // boolean Response = dbHandler.insertuser( RanID,String.valueOf(R.id.txt_Email), String.valueOf(R.id.txt_Pwd), null, null, null, null, homeactivity.getDateTime() );
+
+
     }
-}
+
+
+
+
+    }

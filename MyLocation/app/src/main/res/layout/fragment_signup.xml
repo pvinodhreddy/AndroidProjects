@@ -33,6 +33,7 @@
 
 
             <EditText
+                android:id="@+id/txt_Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"/>
@@ -46,6 +47,7 @@
 
 
             <EditText
+                android:id="@+id/txt_Pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -58,12 +60,14 @@
 
 
             <EditText
+                android:id="@+id/txt_CPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
 
 
             <CheckBox
+                android:id="@+id/Cterms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_terms"/>

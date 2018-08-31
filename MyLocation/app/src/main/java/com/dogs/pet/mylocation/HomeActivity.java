@@ -11,6 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
+
 
 public class HomeActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
@@ -20,6 +25,8 @@ public class HomeActivity extends AppCompatActivity implements OnFragmentInterac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         loadLoginFragment();
+        MyDBHandler dbHandler = new MyDBHandler(this);
+
 
     }
 
@@ -51,6 +58,27 @@ public class HomeActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
+    public String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    public static String generateRandom() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+
+        // first not 0 digit
+        sb.append(random.nextInt(9) + 1);
+
+        // rest of 11 digits
+        for (int i = 0; i < 11; i++) {
+            sb.append(random.nextInt(10));
+        }
+
+        return String.valueOf(sb);
+    }
     @Override
     public void onButtonClick(View v) {
 
@@ -59,6 +87,8 @@ public class HomeActivity extends AppCompatActivity implements OnFragmentInterac
                 loadMapFragment();
                 break;
             case R.id.btn_signup:
+               loadLoginFragment();
+
                 break;
             case R.id.txt_signup:
                 loadSignUpFragment();
