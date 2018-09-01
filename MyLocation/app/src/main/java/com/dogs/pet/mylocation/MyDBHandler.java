@@ -85,14 +85,14 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public boolean insertuser (String Uid, String Uemail, String Upwd, String Ufname, String Ulname, String Ugender, String Umobile, String Udatetime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ID", Uid);
-        contentValues.put("EMAIL", Uemail);
-        contentValues.put("PASSWORD", Upwd);
-        contentValues.put("FNAME", Ufname);
-        contentValues.put("LNAME", Ulname);
-        contentValues.put("GENDER", Ugender);
-        contentValues.put("MOBILE", Umobile);
-        contentValues.put("DATETIME", Udatetime);
+        contentValues.put(USER_ID, Uid);
+        contentValues.put(USER_EMAIL, Uemail);
+        contentValues.put(USER_PASSWORD, Upwd);
+        contentValues.put(USER_FNAME, Ufname);
+        contentValues.put(USER_LNAME, Ulname);
+        contentValues.put(USER_GENDER, Ugender);
+        contentValues.put(USER_MOBILE, Umobile);
+        contentValues.put(USER_DATETIME, Udatetime);
         db.insert(TABLE_NAME_USER, null, contentValues);
         return true;
     }
@@ -100,13 +100,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public boolean insertlocation (String Lid, String Lsource, String Ldest, String Lamount, String carid, String userid, String Ldatetime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ID", Lid);
-        contentValues.put("LOCATION_SRC", Lsource);
-        contentValues.put("LOCATION_DEST", Ldest);
-        contentValues.put("AMOUNT", Lamount);
-        contentValues.put("CAR_ID", carid);
-        contentValues.put("USER_ID", userid);
-        contentValues.put("DATETIME", Ldatetime);
+        contentValues.put(LOCATION_ID, Lid);
+        contentValues.put(LOCATION_SOURCE, Lsource);
+        contentValues.put(LOCATION_DESTINATION, Ldest);
+        contentValues.put(LOCATION_AMOUNT, Lamount);
+        contentValues.put(LOCATION_CAR_ID, carid);
+        contentValues.put(LOCATION_USER_ID, userid);
+        contentValues.put(LOCATION_DATETIME, Ldatetime);
         db.insert(TABLE_NAME_LOCATION, null, contentValues);
         return true;
     }
@@ -114,10 +114,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public boolean insertcar (String Cid, String Cname, String Ctype, String Cdatetime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ID", Cid);
-        contentValues.put("Name", Cname);
-        contentValues.put("Type", Ctype);
-        contentValues.put("DATETIME", Cdatetime);
+        contentValues.put(CAR_ID, Cid);
+        contentValues.put(CAR_NAME, Cname);
+        contentValues.put(CAR_TYPE, Ctype);
+        contentValues.put(CAR_DATETIME, Cdatetime);
         db.insert(TABLE_NAME_LOCATION, null, contentValues);
         return true;
     }
