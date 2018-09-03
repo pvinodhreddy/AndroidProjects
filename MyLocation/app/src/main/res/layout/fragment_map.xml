@@ -55,7 +55,7 @@
             android:columnCount="3"
             android:rowCount="2">
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imageView_hatch"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:scaleType="fitCenter"
@@ -65,7 +65,7 @@
                 />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView_sedan"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:scaleType="fitCenter"
@@ -75,7 +75,7 @@
 
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageView_SUV"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:scaleType="fitCenter"

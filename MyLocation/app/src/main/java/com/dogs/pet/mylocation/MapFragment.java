@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -56,6 +57,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationClient ;
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 377;
     private GoogleMap mapView;
+    private ImageView Img_Hatch;
+    private ImageView Img_Sedan;
+    private ImageView Img_SUV;
 
     public double Lat;
     public double Lng;
@@ -101,6 +105,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
         txtSlocation = (EditText) rootView.findViewById(R.id.txt_SLocation);
         txtDlocation = (EditText) rootView.findViewById(R.id.txt_DLocation);
+        Img_Hatch = (ImageView) rootView.findViewById(R.id.imageView_hatch);
+        Img_Sedan = (ImageView) rootView.findViewById(R.id.imageView_sedan);
+        Img_SUV = (ImageView) rootView.findViewById(R.id.imageView_SUV);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         checkLocationPermission();
         return rootView;
@@ -353,8 +360,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             }
         });
-*/
-
+*/      Img_Hatch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v1) {
+                Img_Hatch.setImageResource(R.drawable.hatch_click);
+            }
+        });
+        //Img_Hatch.setOnClickListener((View.OnClickListener) this);
 
         mapView.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
 
@@ -388,19 +399,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 if (IsSrcLocation) {
 
-                    // addresses = geocoder.getFromLocationName("Rajajinagar", 1);
-                    //double Lat = SLMarker.getPosition().latitude;
-                   // double Lang = SLMarker.getPosition().longitude;
 
-                    // String city = addresses.get(0).getAddressLine(1);
-                    // String city_ = addresses.get(0).getAddressLine(0);
-                    // Toast.makeText(MapsActivity_1.this, city, Toast.LENGTH_LONG).show();
-                    //Log.d("-------------city:", city);
-                   // String Naddress = DragAddress.get(0).getAddressLine(0);
                     txtSlocation.setText(DragAddress.get(0).getAddressLine(0));
-                    //Log.d("-------------city:", String.valueOf(Lat));
-                    // Log.d("-------------city:", String.valueOf(Lang));
-                    //Log.d("------------", "----");
+
                 }else
                 {
                     //DragAddress = geocoder.getFromLocation(DLMarker.getPosition().latitude, DLMarker.getPosition().longitude, 1);

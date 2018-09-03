@@ -2,13 +2,13 @@ package com.dogs.pet.mylocation;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.net.PortUnreachableException;
 
 public class MyDBHandler extends SQLiteOpenHelper{
-
 
     SQLiteDatabase database;
 
@@ -128,6 +128,15 @@ public class MyDBHandler extends SQLiteOpenHelper{
         //return db.delete(TABLE_NAME_USER, EMAIL +  "=" + id, null) > 0;
         return true;
     }
+
+    public Cursor getuserdata(String uemail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+      // Cursor res = db.rawQuery(" select * from "+TABLE_NAME_USER+" where EMAIL='"+uemail+"'",null);
+        return db.query(TABLE_NAME_USER, new String[] { USER_EMAIL, USER_PASSWORD }, USER_EMAIL+"=?", new String[]{uemail}, null,null, null);
+
+    }
+
+
 
 }
 

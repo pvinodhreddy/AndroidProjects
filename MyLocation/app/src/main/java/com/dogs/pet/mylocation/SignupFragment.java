@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.dogs.pet.mylocation.HomeActivity.generateRandom;
 
@@ -35,6 +38,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
     private Button btn_SignUp;
     private EditText Email;
     private EditText password;
+    private EditText Cpassword;
     private OnFragmentInteractionListener mListener;
 
     public SignupFragment() {
@@ -77,6 +81,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
        btn_SignUp = (Button) fragment.findViewById(R.id.btn_signup);
        Email = (EditText) fragment.findViewById(R.id.txt_Email);
        password = (EditText) fragment.findViewById(R.id.txt_Pwd);
+       Cpassword = (EditText) fragment.findViewById(R.id.txt_CPwd);
 
         btn_SignUp.setOnClickListener(this);
         // Inflate the layout for this fragment
@@ -101,7 +106,14 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
         super.onDetach();
         mListener = null;
     }
-
+    public boolean emailValidator(String email) {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
 
 
@@ -109,23 +121,37 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        MyDBHandler dbHandler = new MyDBHandler(getActivity());
-        HomeActivity homeactivity = new HomeActivity();
-
-
-        String RanID = generateRandom();
-        String email = Email.getText().toString();
-        String pwd = password.getText().toString();
-        String datetime = homeactivity.getDateTime();
-
-       // boolean delete = dbHandler.Deleteuser("Vinodh@gmail.com");
-
-         boolean Response = dbHandler.insertuser( RanID, email, pwd, null, null, null, null, datetime );
-
+        String email = Email.getText().toString().trim();
+        String pwd = password.getText().toString().trim();
+        String cpwd = Cpassword.getText().toString().trim();
 
         if (mListener != null) {
-            mListener.onButtonClick(v);
+            if(email.equals("")){
+                Toast.makeText(getContext(), "Enter Email", Toast.LENGTH_SHORT).show();
+            }else if(!emailValidator(email)) {
+                Toast.makeText(getContext(), "Enter Valid Email", Toast.LENGTH_SHORT).show();
+            }else if (pwd.equals("")){
+                Toast.makeText(getContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+            }else if(!pwd.equals(cpwd)){
+                Toast.makeText(getContext(), "Password not Matched", Toast.LENGTH_SHORT).show();
+            }else
+            {
+                MyDBHandler dbHandler = new MyDBHandler(getActivity());
+                HomeActivity homeactivity = new HomeActivity();
 
+
+                String RanID = generateRandom();
+
+                String datetime = homeactivity.getDateTime();
+
+               // boolean delete = dbHandler.Deleteuser("Vinodh@gmail.com");
+
+                 boolean Response = dbHandler.insertuser( RanID, email, pwd, null, null, null, null, datetime );
+
+                    if(Response)
+                    mListener.onButtonClick(v);
+
+             }
         }
 
 
