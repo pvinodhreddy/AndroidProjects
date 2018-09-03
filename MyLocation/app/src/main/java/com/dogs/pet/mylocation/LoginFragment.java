@@ -42,6 +42,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private View rootView;
     public String GetEmail = null;
     public String GetPwd = null;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -90,7 +91,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -113,8 +113,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             MyDBHandler dbHandler = new MyDBHandler(getActivity());
             String Uemail = txtLemail.getText().toString().trim();
             String Upwd = txtLpwd.getText().toString().trim();
-            if ((Uemail.equals("")) || (Upwd.equals(""))) {
-                Toast.makeText(getContext(), "Enter Credentials", Toast.LENGTH_SHORT).show();
+            if (Uemail.equals("")){
+                Toast.makeText(getContext(), "Enter Email", Toast.LENGTH_SHORT).show();
+                txtLemail.setBackgroundColor(Color.RED);
+                return false;
+            }else if(Upwd.equals("")) {
+                Toast.makeText(getContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+                txtLpwd.setBackgroundColor(Color.RED);
                 return false;
             } else {
                 Cursor res = dbHandler.getuserdata(Uemail);
@@ -124,10 +129,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if (GetEmail.equals(Uemail) && GetPwd.equals(Upwd) && !(GetEmail.equals("") && GetPwd.equals(""))) {
                     return true;
                 }
+                Toast.makeText(getContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
+
                 return false;
 
             }
-        }catch (Exception e){
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -137,26 +145,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if (mListener != null) {
-            if(v.getId() == R.id.txt_signup)
-            {
+            if (v.getId() == R.id.txt_signup) {
                 mListener.onButtonClick(v);
 
+            } else {
+
+                boolean valid = Validation();
+                if (valid) {
+                    mListener.onButtonClick(v);
+
+                }
             }
-
-        boolean valid = Validation();
-        if(!valid) {
-
-            Toast.makeText(getContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-
-
-            txtLemail.setBackgroundColor(Color.RED);
-            txtLpwd.setBackgroundColor(Color.RED);
-
-        }else {
-
-            mListener.onButtonClick(v);
-        }
-
         }
     }
 }
