@@ -1,6 +1,8 @@
 package com.dogs.pet.mylocation;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -33,8 +37,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private Button btnLogin;
     private TextView txtSignUp;
+    private EditText txtLemail;
+    private EditText txtLpwd;
     private View rootView;
-
+    public String GetEmail = null;
+    public String GetPwd = null;
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -74,6 +81,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         View fragment = inflater.inflate(R.layout.fragment_login, container, false);
         btnLogin = (Button) fragment.findViewById(R.id.btn_login);
         txtSignUp = (TextView) fragment.findViewById(R.id.txt_signup);
+        txtLemail = (EditText) fragment.findViewById(R.id.txt_Lemail);
+        txtLpwd = (EditText) fragment.findViewById(R.id.txt_Lpwd);
+
         txtSignUp.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         return fragment;
@@ -98,11 +108,55 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
+    public boolean Validation() {
+        try {
+            MyDBHandler dbHandler = new MyDBHandler(getActivity());
+            String Uemail = txtLemail.getText().toString().trim();
+            String Upwd = txtLpwd.getText().toString().trim();
+            if ((Uemail.equals("")) || (Upwd.equals(""))) {
+                Toast.makeText(getContext(), "Enter Credentials", Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                Cursor res = dbHandler.getuserdata(Uemail);
+                res.moveToFirst();
+                GetEmail = res.getString(res.getColumnIndex(dbHandler.USER_EMAIL));
+                GetPwd = res.getString(res.getColumnIndex(dbHandler.USER_PASSWORD));
+                if (GetEmail.equals(Uemail) && GetPwd.equals(Upwd) && !(GetEmail.equals("") && GetPwd.equals(""))) {
+                    return true;
+                }
+                return false;
+
+            }
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
+
         if (mListener != null) {
+            if(v.getId() == R.id.txt_signup)
+            {
+                mListener.onButtonClick(v);
+
+            }
+
+        boolean valid = Validation();
+        if(!valid) {
+
+            Toast.makeText(getContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+
+
+            txtLemail.setBackgroundColor(Color.RED);
+            txtLpwd.setBackgroundColor(Color.RED);
+
+        }else {
+
             mListener.onButtonClick(v);
+        }
+
         }
     }
 }
